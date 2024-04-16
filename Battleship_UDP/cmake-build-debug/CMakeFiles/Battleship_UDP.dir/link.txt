@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/Battleship_UDP.dir/server.c.o -o Battleship_UDP 
