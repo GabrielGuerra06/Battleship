@@ -1,3 +1,0 @@
-/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/CMakeFiles/Battleship_UDP.dir
-/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
