@@ -1,4 +1,4 @@
-# PROTOCOL NAVAL WARFARE"
+# PROTOCOL NAVAL WARFARE
 
 ## Integrantes
 - Carlos Esteban López Sánchez
@@ -8,6 +8,12 @@
 Second Midtermn Project for Distributed Computing course.
 
 Multiplayer Battleship Game in Unity implementing TCP and UDP connections via C Server.
+
+This project includes:
+- Simple User Auth.
+- Lobby Game.
+- Chatroom for Lobby Game.
+- Game.
 
 ## Languages
 This project uses:
