@@ -48,6 +48,8 @@ int load_players();
 
 void register_user(const char *username, const char *auth_key);
 
+void login(const char *username, const char *auth_key);
+
 int validate_credentials(const char *username, const char *auth_key);
 
 void handle_client(int client_socket);
@@ -76,7 +78,7 @@ int main() {
     check(listen(server_socket, LOBBY_SIZE), "Listen error");
     printf("Server listening on port %d\n", PORT);
     check(load_players(), "");
-    printf("Papu loaded into server.\n");
+    printf("Player loaded into server.\n");
     while (TRUE) {
         client_socket = accept(server_socket, (struct sockaddr *) &client_addr, &client_addr_len);
         if (client_socket < 0) {
@@ -198,33 +200,28 @@ void handle_client(int client_socket) {
 
 
 int validate_credentials(const char *username, const char *auth_key) {
-//    FILE *user_file = fopen(DB, "r");
-//    char line[BUFFER_SIZE];
-//    char file_username[MAX_USERNAME_LEN + 1];
-//    char file_auth_key[AUTH_KEY_LEN + 1];
-//
-//    if (user_file == NULL) {
-//        perror("Error opening user file");
-//        return 0;
-//    }
-//
-//    while (fgets(line, BUFFER_SIZE, user_file) != NULL) {
-//        sscanf(line, "%s %s", file_username, file_auth_key);
-//        if (strcmp(username, file_username) == 0 && strcmp(auth_key, file_auth_key) == 0) {
-//            fclose(user_file);
-//            return 1;
-//        }
-//    }
-//
-//    fclose(user_file);
-//    return 0;
-    for (int i = 0; i < MAX_PLAYERS; ++i) {
-        if (strcmp(username, players[i].username) == 0 && strcmp(auth_key, players[i].auth_key) == 0) {
-            return TRUE;
-        }
-    }
+    FILE *user_file = fopen(DB, "r");
 
-    return FALSE;
+    if (user_file == NULL) {
+       perror("Error opening user file");
+       return 0;
+     }
+    
+    char file_username[MAX_USERNAME_LEN + 1];
+    char file_auth_key[AUTH_KEY_LEN + 1];
+    int match_found = 0;
+
+    while(fscanf(user_file, "%s" "%s", file_username, file_auth_key ) != EOF){
+            if (strcmp(username, file_username) == 0 && strcmp(auth_key, file_auth_key) == 0) {
+                match_found = 1;
+                break;
+
+            }
+
+    }
+    fclose(user_file);
+    return match_found;
+
 }
 
 
@@ -232,8 +229,8 @@ void checkEntryAction(char action, const char *username, const char *auth_key) {
     printf("Users loaded into server.\n");
 
     if (action == LOGIN) {
-        printf("Iniciar sesión del usuario");
-//     Insertar accion de login de usuario
+        printf("Iniciar sesión del usuario\n");
+        login(username, auth_key);
     } else if (action == REGISTER) {
         printf("Registro de usuario");
         register_user(username, auth_key);
@@ -252,7 +249,15 @@ void register_user(const char *username, const char *auth_key) {
     fprintf(user_file, "%s %s\n", username, auth_key);
 
     fclose(user_file);
+}
 
+void login(const char *username, const char *auth_key){
+    if(validate_credentials(username, auth_key)){
+        printf("Login succesful for user: %s\n", username);
+    }
+    else{
+        printf("Login failed for user: %s\n", username);
+    }
 }
 
 void print_players(int num_players) {
