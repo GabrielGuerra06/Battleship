@@ -12,12 +12,15 @@ public class TCP_Client : MonoBehaviour
     private NetworkStream stream;
     private byte[] receiveBuffer = new byte[1024]; // Adjust buffer size as needed
 
+    public string nameInput;
+    public string passwordInput;
+
     private void Start()
     {
-        ConnectToServer();
+        //ConnectToServer();
     }
 
-    private void ConnectToServer()
+    public void ConnectToServer()
     {
         try
         {
@@ -39,7 +42,19 @@ public class TCP_Client : MonoBehaviour
         }
     }
 
-    private void ReceiveCallback(IAsyncResult result)
+    public void GetNameInputString(string name) {
+        nameInput = name;
+        Debug.Log(name);
+    } 
+
+    public void GetPasswordInputString(string password)
+    {
+        passwordInput = password;
+        Debug.Log(password);
+    }
+
+
+    public void ReceiveCallback(IAsyncResult result)
     {
         try
         {
@@ -55,8 +70,9 @@ public class TCP_Client : MonoBehaviour
 
             if (message.Contains("register") || message.Contains("login"))
             {
-                byte[] registerMessage = ConstructMessage(new byte[] { 0b00001000 }, "Gabriel Guerra       ", "2606");
-
+                String nombre = nameInput;
+                String contraseña = passwordInput;
+                byte[] registerMessage = ConstructMessage(new byte[] { 0b00001001 }, nombre, contraseña);
                 stream.Write(registerMessage, 0, registerMessage.Length);
 
                 Debug.Log("Registration details sent to server.");
