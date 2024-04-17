@@ -10,6 +10,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+
     [Header("Ships")]
     public GameObject[] ships;
     public EnemyScript enemyScript;
@@ -95,6 +96,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void PlaceShip(GameObject tile)
     {
         shipScript = ships[shipIndex].GetComponent<ShipScript>();
@@ -102,6 +104,7 @@ public class GameManager : MonoBehaviour
         Vector3 newVec = shipScript.GetOffsetVec(tile.transform.position);
         ships[shipIndex].transform.localPosition = newVec;
     }
+
 
     void RotateClicked()
     {
@@ -154,6 +157,7 @@ public class GameManager : MonoBehaviour
         }
         Invoke("EndPlayerTurn", 1.0f);
     }
+
 
     public void EnemyHitPlayer(Vector3 tile, int tileNum, GameObject hitObj)
     {
@@ -208,6 +212,7 @@ public class GameManager : MonoBehaviour
         playerTurn = false;
     }
 
+
     void ReplayClicked()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -215,3 +220,4 @@ public class GameManager : MonoBehaviour
 
 
 }
+
