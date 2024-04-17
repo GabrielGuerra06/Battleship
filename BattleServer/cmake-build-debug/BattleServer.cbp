@@ -8,84 +8,78 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="BattleServer">
-				<Option output="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/BattleServer" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug"/>
+				<Option output="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/BattleServer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/include/c++/11"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
-					<Add directory="/usr/include/c++/11/backward"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 BattleServer"/>
-					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 BattleServer"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="BattleServer/fast">
-				<Option output="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/BattleServer" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug"/>
+				<Option output="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/BattleServer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/include/c++/11"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
-					<Add directory="/usr/include/c++/11/backward"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 BattleServer/fast"/>
-					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 BattleServer/fast"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/CLionProjects/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/Users/patom/CLionProjects/BattleServer/battleserver.c">
+		<Unit filename="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/battleserver.c">
 			<Option target="BattleServer"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/patom/CLionProjects/BattleServer/CMakeLists.txt">
+		<Unit filename="/mnt/c/Users/patom/UnityProjects/Battleship/BattleServer/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

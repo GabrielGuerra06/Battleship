@@ -132,7 +132,8 @@ void create_database() {
 int load_players() {
     FILE *db = fopen(DB, "r");
     if (db != NULL) {
-        char *buffer = malloc(sizeof(char) * (MAX_USERNAME_LEN + AUTH_KEY_LEN + 2)); // +2 for newline and null terminator
+        char *buffer = malloc(
+                sizeof(char) * (MAX_USERNAME_LEN + AUTH_KEY_LEN + 2)); // +2 for newline and null terminator
         if (buffer != NULL) {
             int user_index = 0;
             while (fgets(buffer, MAX_USERNAME_LEN + AUTH_KEY_LEN + 2, db)) { // pass correct buffer size
@@ -196,28 +197,7 @@ void handle_client(int client_socket) {
 }
 
 
-
 int validate_credentials(const char *username, const char *auth_key) {
-//    FILE *user_file = fopen(DB, "r");
-//    char line[BUFFER_SIZE];
-//    char file_username[MAX_USERNAME_LEN + 1];
-//    char file_auth_key[AUTH_KEY_LEN + 1];
-//
-//    if (user_file == NULL) {
-//        perror("Error opening user file");
-//        return 0;
-//    }
-//
-//    while (fgets(line, BUFFER_SIZE, user_file) != NULL) {
-//        sscanf(line, "%s %s", file_username, file_auth_key);
-//        if (strcmp(username, file_username) == 0 && strcmp(auth_key, file_auth_key) == 0) {
-//            fclose(user_file);
-//            return 1;
-//        }
-//    }
-//
-//    fclose(user_file);
-//    return 0;
     for (int i = 0; i < MAX_PLAYERS; ++i) {
         if (strcmp(username, players[i].username) == 0 && strcmp(auth_key, players[i].auth_key) == 0) {
             return TRUE;
@@ -233,7 +213,11 @@ void checkEntryAction(char action, const char *username, const char *auth_key) {
 
     if (action == LOGIN) {
         printf("Iniciar sesión del usuario");
-//     Insertar accion de login de usuario
+        if (validate_credentials(username, auth_key)) {
+            printf("Sesion iniciada");
+        } else {
+            printf("Credenciales incorrectas");
+        }
     } else if (action == REGISTER) {
         printf("Registro de usuario");
         register_user(username, auth_key);
@@ -262,43 +246,3 @@ void print_players(int num_players) {
     }
 }
 
-//void temp(int client_socket) {
-//    char buffer[BUFFER_SIZE];
-//    int bytes_received;
-//    char username[MAX_USERNAME_LEN + 1];
-//    char auth_key[AUTH_KEY_LEN + 1];
-//    bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-//    const char *prompt = "Enter 'register' to register or 'login' to login: ";
-//    send(client_socket, prompt, strlen(prompt), 0);
-//// [Action][Name][Password]
-//// 00001000 00000000 x 24 00000000 x 4 -> Login
-//// 00001001 00000000 x 24 00000000 x 4 -> Register
-//    bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-//    buffer[bytes_received] = '\0';
-//    printf("Received: %s\n", buffer);
-//
-//    if (strcmp(buffer, "register") == 0) {
-////        register_user(client_socket);
-//    } else if (strcmp(buffer, "login") == 0) {
-//        bytes_received = recv(client_socket, username, MAX_USERNAME_LEN, 0);
-//        username[bytes_received] = '\0';
-//        bytes_received = recv(client_socket, auth_key, AUTH_KEY_LEN, 0);
-//        auth_key[bytes_received] = '\0';
-//
-//        if (validate_credentials(username, auth_key)) {
-//            printf("Client '%s' authenticated successfully\n", username);
-//            // Proceed with the game
-//            // ...
-//        } else {
-//            printf("Client '%s' authentication failed\n", username);
-//            const char *auth_failed = "Authentication failed. Connection closed.\n";
-//            send(client_socket, auth_failed, strlen(auth_failed), 0);
-//            close(client_socket);
-//        }
-//    } else {
-//        printf("Client entered invalid choice: %s\n", buffer);
-//        const char *invalid_choice = "Invalid choice. Connection closed.\n";
-//        send(client_socket, invalid_choice, strlen(invalid_choice), 0);
-//        close(client_socket);
-//    }
-//}
