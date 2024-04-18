@@ -9,7 +9,14 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.iOS.Xcode;
+using System.IO;
+using System.Net.Sockets;
+using System.Net;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.PackageManager;
+using System.Net.Sockets;
+using System.Collections.Generic;
+using System.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -50,6 +57,20 @@ public class GameManager : MonoBehaviour
     public List<string> shipsPositions = new List<string>();
 
 
+
+    public string ipAddress = "127.0.0.1"; // Change this to the IP address you want to connect to
+    public int port = 5000; // Change this to the port you want to connect to 
+
+    private TcpClient client;
+    private NetworkStream stream;
+    private byte[] receiveBuffer = new byte[1024]; // Adjust buffer size as needed
+
+    public string nameInput;
+    public string passwordInput;
+
+    public List<string> positions;
+
+    private bool selectAction;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +80,96 @@ public class GameManager : MonoBehaviour
         replayBtn.onClick.AddListener(() => ReplayClicked());
         enemyShips = enemyScript.PlaceEnemyShips();
     }
+
+   private void ConnectToServer()
+    {
+        try
+        {
+            client = new TcpClient(ipAddress, port);
+            stream = client.GetStream();
+            Debug.Log("Connected to server.");
+
+            // Start asynchronous reading
+            stream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, ReceiveCallback, null);
+        }
+        catch (SocketException ex)
+        {
+            Debug.LogError($"SocketException: {ex.SocketErrorCode}");
+            Debug.LogError($"Error connecting to server: {ex.Message}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error connecting to server: " + e.Message);
+        }
+    }
+
+    /// <summary>
+    /// //////////////////////////////////////conexion
+    /// </summary>
+    /// <param name="result"></param>
+   private void ReceiveCallback(IAsyncResult result)
+    {
+        try
+        {
+            int bytesRead = stream.EndRead(result);
+            if (bytesRead <= 0)
+            {
+                Debug.Log("Disconnected from server.");
+                return;
+            }
+
+            string message = Encoding.ASCII.GetString(receiveBuffer, 0, bytesRead);
+            Debug.Log("Received message from server: " + message);
+            String nombre = nameInput;
+            String contraseña = passwordInput;
+            if (selectAction == true)
+            {
+                byte[] registerMessage = ConstructMessage(new byte[] { 0b00001001 }, nombre, contraseña);
+                stream.Write(registerMessage, 0, registerMessage.Length);
+                Debug.Log("Registration details sent to server.");
+
+
+            }
+            else if (selectAction == false)
+            {
+                byte[] registerMessage = ConstructMessage(new byte[] { 0b00001000 }, nombre, contraseña);
+                stream.Write(registerMessage, 0, registerMessage.Length);
+                Debug.Log("Registration details sent to server.");
+
+            }
+            else
+            {
+                Debug.Log("No funco");
+            }
+
+            stream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, ReceiveCallback, null);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error receiving message: " + e.Message);
+        }
+    }
+
+   private byte[] ConstructMessage(byte[] action, string username, string authKey)
+    {
+        byte[] messageBytes = new byte[29]; // Total size: 1 (action) + 24 (username) + 4 (authKey)
+
+        // Action
+        Array.Copy(action, messageBytes, 1);
+
+        // Username
+        byte[] usernameBytes = Encoding.ASCII.GetBytes(username.PadRight(24));
+        Array.Copy(usernameBytes, 0, messageBytes, 1, usernameBytes.Length);
+
+        // AuthKey
+        byte[] authKeyBytes = Encoding.ASCII.GetBytes(authKey.PadRight(4));
+        Array.Copy(authKeyBytes, 0, messageBytes, 25, authKeyBytes.Length);
+
+        return messageBytes;
+    }
+/// <summary>
+/// //////////////////////conexion//////////////////////////////////////
+/// </summary>
 
     private void NextShipClicked()
     {
@@ -82,15 +193,17 @@ public class GameManager : MonoBehaviour
                 rotateBtn.gameObject.SetActive(false);
                 nextBtn.gameObject.SetActive(false);
                 woodDock.SetActive(false);
+
                 topText.text = "Guess an enemy tile.";
                 setupComplete = true;
                 for (int i = 0; i < ships.Length; i++) ships[i].SetActive(false);
                 String lastElement = player1Ships.Last();
                 shipsPositions.Add(lastElement);
-                for (int i = 0; i < shipsPositions.Count; i++)
-                {
-                    Debug.Log(shipsPositions[i]);
-                }
+
+                /////////////////Nueva conexion de cliente//////////////////////
+                ConnectToServer();
+
+                //////////////////////////////////////////////////////////////////////
             }
         }
 
@@ -197,7 +310,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject fire in enemyFires) fire.SetActive(false);
         enemyShipText.text = enemyShipCount.ToString();
         topText.text = "Enemy's turn";
-        enemyScript.NPCTurn();
+        //enemyScript.NPCTurn();
         ColorAllTiles(0);
         if (playerShipCount < 1) GameOver("ENEMY WINs!!!");
     }
