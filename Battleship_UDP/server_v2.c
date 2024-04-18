@@ -40,15 +40,22 @@ int main() {
 
     printf("UDP Messaging Server listening on port %d...\n", PORT);
 
+    char buffer_c1[BUFFER_SIZE];
+    char buffer_c2[BUFFER_SIZE];
     struct Client client_1, client_2;
     client_1.addr_len = sizeof(client_1.client_addr);
     client_2.addr_len = sizeof(client_2.client_addr);
 
+    //Receive from client 1
+    client_1.client_fd = recvfrom(server_fd, buffer_c1, BUFFER_SIZE, 0, (struct sockaddr *) &client_1.client_addr, &client_1.addr_len);
+    printf("Client %s:%d: %s, %zd\n", inet_ntoa(client_1.client_addr.sin_addr), ntohs(client_1.client_addr.sin_port), buffer_c1, client_1.client_fd);
+    //Receive from client 2
+    client_2.client_fd = recvfrom(server_fd, buffer_c2, BUFFER_SIZE, 0, (struct sockaddr *) &client_2.client_addr, &client_2.addr_len);
+    printf("Client %s:%d: %s, %zd\n", inet_ntoa(client_2.client_addr.sin_addr), ntohs(client_2.client_addr.sin_port), buffer_c2, client_2.client_fd);
 
     while (TRUE) {
-        char buffer_c1[BUFFER_SIZE];
-        char buffer_c2[BUFFER_SIZE];
-//        ssize_t client_1.client_fd, client_2.client_fd;
+        memset(buffer_c1, 0, sizeof(buffer_c1));
+        memset(buffer_c2, 0, sizeof(buffer_c2));
         //Receive from client 1
         client_1.client_fd = recvfrom(server_fd, buffer_c1, BUFFER_SIZE, MSG_DONTWAIT, (struct sockaddr *) &client_1.client_addr, &client_1.addr_len);
         //Receive from client 2
@@ -57,24 +64,27 @@ int main() {
 //            perror("Receive From Error");
             continue;
         } else if (client_1.client_fd != FAILURE && client_2.client_fd == FAILURE) {
+            printf("C1, %zd, %zd\n", client_1.client_fd, client_2.client_fd);
             buffer_c1[client_1.client_fd] = '\0';
             printf("Client %s:%d: %s, %zd\n", inet_ntoa(client_1.client_addr.sin_addr), ntohs(client_1.client_addr.sin_port), buffer_c1, client_1.client_fd);
             // Send to client 2
-            check_transfer(sendto(server_fd, buffer_c2, strlen(buffer_c2), 0, (struct sockaddr *) &client_1.client_addr, client_1.addr_len), "Send To Error");
+            check_transfer(sendto(server_fd, buffer_c1, sizeof(buffer_c1), 0, (struct sockaddr *) &client_2.client_addr, client_2.addr_len), "Send To Error");
         } else if (client_1.client_fd == FAILURE && client_2.client_fd != FAILURE) {
+            printf("C2, %zd, %zd\n", client_1.client_fd, client_2.client_fd);
             buffer_c2[client_2.client_fd] = '\0';
             printf("Client %s:%d: %s, %zd\n", inet_ntoa(client_2.client_addr.sin_addr), ntohs(client_2.client_addr.sin_port), buffer_c2, client_2.client_fd);
             //Sent to client 1
-            check_transfer(sendto(server_fd, buffer_c1, strlen(buffer_c1), 0, (struct sockaddr *) &client_2.client_addr, client_2.addr_len), "Send To Error");
+            check_transfer(sendto(server_fd, buffer_c2, sizeof(buffer_c2), 0, (struct sockaddr *) &client_1.client_addr, client_1.addr_len), "Send To Error");
         } else {
+            printf("C3, %zd, %zd\n", client_1.client_fd, client_2.client_fd);
             buffer_c1[client_1.client_fd] = '\0';
             buffer_c2[client_2.client_fd] = '\0';
             printf("Client %s:%d: %s, %zd\n", inet_ntoa(client_1.client_addr.sin_addr), ntohs(client_1.client_addr.sin_port), buffer_c1, client_1.client_fd);
             printf("Client %s:%d: %s, %zd\n", inet_ntoa(client_2.client_addr.sin_addr), ntohs(client_2.client_addr.sin_port), buffer_c2, client_2.client_fd);
             // Send to client 2
-            check_transfer(sendto(server_fd, buffer_c1, strlen(buffer_c1), 0, (struct sockaddr *) &client_2.client_addr, client_2.addr_len), "Send To Error");
+            check_transfer(sendto(server_fd, buffer_c1, sizeof(buffer_c1), 0, (struct sockaddr *) &client_2.client_addr, client_2.addr_len), "Send To Error");
             //Sent to client 1
-            check_transfer(sendto(server_fd, buffer_c2, strlen(buffer_c2), 0, (struct sockaddr *) &client_1.client_addr, client_1.addr_len), "Send To Error");
+            check_transfer(sendto(server_fd, buffer_c2, sizeof(buffer_c2), 0, (struct sockaddr *) &client_1.client_addr, client_1.addr_len), "Send To Error");
         }
     }
 
