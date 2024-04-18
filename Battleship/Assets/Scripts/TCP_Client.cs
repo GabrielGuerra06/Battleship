@@ -36,8 +36,6 @@ public class TCP_Client : MonoBehaviour
     public void onRegisterClick()
     {
         selectAction = true;
-        Debug.Log(selectAction + " 1");
-
     }
 
 
@@ -91,10 +89,8 @@ public class TCP_Client : MonoBehaviour
             {
                 String nombre = nameInput;
                 String contraseña = passwordInput;
-                Debug.Log(selectAction + " 2");
                 if (selectAction == true)
                 {
-                    Debug.Log("hola pija");
                     byte[] registerMessage = ConstructMessage(new byte[] { 0b00001001 }, nombre, contraseña);
                     stream.Write(registerMessage, 0, registerMessage.Length);
                     Debug.Log("Registration details sent to server.");
@@ -103,8 +99,6 @@ public class TCP_Client : MonoBehaviour
                 }
                 else if (selectAction == false) 
                 {
-                    Debug.Log("hola pene");
-
                     byte[] registerMessage = ConstructMessage(new byte[] { 0b00001000 }, nombre, contraseña);
                     stream.Write(registerMessage, 0, registerMessage.Length);
                     Debug.Log("Registration details sent to server.");
@@ -154,6 +148,8 @@ public class TCP_Client : MonoBehaviour
             return ("Perdi");
         }
     }
+
+
 
 
    
