@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.iOS.Xcode;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +45,10 @@ public class GameManager : MonoBehaviour
     private int enemyShipCount = 5;
     private int playerShipCount = 5;
 
+    public List<string> player1Ships = new List<string>();
+
+    public List<string> shipsPositions = new List<string>();
+
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +73,9 @@ public class GameManager : MonoBehaviour
                 shipIndex++;
                 shipScript = ships[shipIndex].GetComponent<ShipScript>();
                 shipScript.FlashColor(Color.yellow);
+                String lastElement = player1Ships.Last();
+                shipsPositions.Add(lastElement);
+
             }
             else
             {
@@ -75,6 +85,12 @@ public class GameManager : MonoBehaviour
                 topText.text = "Guess an enemy tile.";
                 setupComplete = true;
                 for (int i = 0; i < ships.Length; i++) ships[i].SetActive(false);
+                String lastElement = player1Ships.Last();
+                shipsPositions.Add(lastElement);
+                for (int i = 0; i < shipsPositions.Count; i++)
+                {
+                    Debug.Log(shipsPositions[i]);
+                }
             }
         }
 
@@ -103,6 +119,7 @@ public class GameManager : MonoBehaviour
         shipScript.ClearTileList();
         Vector3 newVec = shipScript.GetOffsetVec(tile.transform.position);
         ships[shipIndex].transform.localPosition = newVec;
+        player1Ships.Add(tile.name);
     }
 
 
@@ -221,4 +238,3 @@ public class GameManager : MonoBehaviour
 
 
 }
-

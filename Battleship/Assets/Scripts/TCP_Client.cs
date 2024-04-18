@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class TCP_Client : MonoBehaviour
 {
@@ -15,9 +17,14 @@ public class TCP_Client : MonoBehaviour
     public string nameInput;
     public string passwordInput;
 
+    public List<string> positions;
+
     private void Start()
     {
-        //ConnectToServer();
+
+        GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
+        positions = gameManager.shipsPositions;
+
     }
 
     public void ConnectToServer()
@@ -97,6 +104,26 @@ public class TCP_Client : MonoBehaviour
         {
             Debug.LogError("Error receiving message: " + e.Message);
         }
+    }
+
+    public string CheckTileGuesses(String guess) {
+        if (positions.Count != 0)
+        {
+            if (positions.Contains(guess))
+            {
+                positions.Remove(guess);
+                return("ATINASTE UN BARCO EN LA POSICION ");
+            }
+            else
+            {
+                return ("Pedazo de manco, no le atinaste");
+            }
+        }
+        else
+        {
+            return ("Perdi");
+        }
+
     }
     
 
