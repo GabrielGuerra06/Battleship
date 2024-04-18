@@ -3,4 +3,4 @@ project(Battleship_UDP C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(Battleship_UDP server.c)
+add_executable(Battleship_UDP server_v3.c)

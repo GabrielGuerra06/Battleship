@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP
+CMAKE_SOURCE_DIR = /mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug
+CMAKE_BINARY_DIR = /mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/CMakeFiles /mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/CMakeFiles /mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,29 +129,29 @@ Battleship_UDP/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/build
 .PHONY : Battleship_UDP/fast
 
-server.o: server.c.o
-.PHONY : server.o
+server_v3.o: server_v3.c.o
+.PHONY : server_v3.o
 
 # target to build an object file
-server.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/server.c.o
-.PHONY : server.c.o
+server_v3.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/server_v3.c.o
+.PHONY : server_v3.c.o
 
-server.i: server.c.i
-.PHONY : server.i
+server_v3.i: server_v3.c.i
+.PHONY : server_v3.i
 
 # target to preprocess a source file
-server.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/server.c.i
-.PHONY : server.c.i
+server_v3.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/server_v3.c.i
+.PHONY : server_v3.c.i
 
-server.s: server.c.s
-.PHONY : server.s
+server_v3.s: server_v3.c.s
+.PHONY : server_v3.s
 
 # target to generate assembly for a file
-server.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/server.c.s
-.PHONY : server.c.s
+server_v3.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Battleship_UDP.dir/build.make CMakeFiles/Battleship_UDP.dir/server_v3.c.s
+.PHONY : server_v3.c.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Battleship_UDP"
-	@echo "... server.o"
-	@echo "... server.i"
-	@echo "... server.s"
+	@echo "... server_v3.o"
+	@echo "... server_v3.i"
+	@echo "... server_v3.s"
 .PHONY : help
 
 

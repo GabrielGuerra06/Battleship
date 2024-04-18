@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Battleship_UDP">
-				<Option output="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Battleship_UDP" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug"/>
+				<Option output="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Battleship_UDP" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -30,15 +30,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 Battleship_UDP"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 Battleship_UDP"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Battleship_UDP/fast">
-				<Option output="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Battleship_UDP" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug"/>
+				<Option output="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Battleship_UDP" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -49,37 +49,37 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 Battleship_UDP/fast"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 Battleship_UDP/fast"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/server.c">
+		<Unit filename="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/server_v3.c">
 			<Option target="Battleship_UDP"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/ovidanar/University/Sixth/CD/CDNet_Ubuntu_2/Battleship_UDP/CMakeLists.txt">
+		<Unit filename="/mnt/c/Users/ovidanar/Documents/GitHub/Battleship/Battleship_UDP/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
