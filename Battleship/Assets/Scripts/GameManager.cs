@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
 
     public List<string> shipsPositions = new List<string>();
 
+    private bool awaitingClick = false;
+    private string tileNameToSend = "";
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +66,6 @@ public class GameManager : MonoBehaviour
         nextBtn.onClick.AddListener(() => NextShipClicked());
         rotateBtn.onClick.AddListener(() => RotateClicked());
         replayBtn.onClick.AddListener(() => ReplayClicked());
-        enemyShips = enemyScript.PlaceEnemyShips();
     }
 
 
@@ -74,65 +75,100 @@ public class GameManager : MonoBehaviour
         {
             client = new TcpClient(serverIP, serverPort);
             stream = client.GetStream();
-
             Debug.Log("Conectado al servidor");
 
-            stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
+            StartCoroutine(ReceiveDataCoroutine());
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Debug.LogError("Error al conectar al servidor: " + e.Message);
         }
     }
 
-    private void ReceiveData(IAsyncResult ar)
+    private IEnumerator ReceiveDataCoroutine()
     {
-        try
+        while (client.Connected)
         {
-            int bytesRead = stream.EndRead(ar);
-            if (bytesRead > 0)
+            if (stream.DataAvailable)
             {
-                string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Debug.Log("Datos recibidos del servidor: " + receivedData);
-
-                if (receivedData.Contains("Prueba posicion:"))
+                int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                if (bytesRead > 0)
                 {
-                    SendData("A3");
-                }
-                else if (receivedData.Contains("Espera tu turno."))
-                {
-                    stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
-                }
-                else if (receivedData == "A3")
-                {
-                    SendData(CheckTileGuesses(receivedData));
+                    string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                    Debug.Log("Datos recibidos del servidor: " + receivedData);
 
-                }
-                else if(receivedData == "ATINASTE"){
-                    
+                    HandleData(receivedData);
                 }
 
-                else if(receivedData == "FALLASTE"){
-                    
-                }
-
-                else if(receivedData == "DERROTA"){
-                    
-                }
-
-
-
-                stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
+                yield return null;
             }
             else
             {
-                Debug.Log("El servidor ha cerrado la conexión");
+                yield return
+                    new WaitForSeconds(0.1f);
             }
         }
-        catch (Exception e)
+
+        Debug.Log("El servidor ha cerrado la conexión");
+    }
+
+
+    private void HandleData(string data)
+    {
+        if (data.Contains("Prueba posicion:"))
         {
-            Debug.LogError("Error al recibir datos del servidor: " + e.Message);
+            StartCoroutine(WaitForTileSelection());
         }
+        else if (data.Contains("Espera tu turno."))
+        {
+            StartCoroutine(ReceiveDataCoroutine());
+        }
+        else if (ValidateString(data))
+        {
+            SendData(CheckTileGuesses(data));
+        }
+        else if (data == "ATINASTE")
+        {
+            Debug.Log("¡Correcto!");
+        }
+        else if (data == "FALLASTE")
+        {
+            Debug.Log("Intento fallido.");
+        }
+        else if (data == "DERROTA")
+        {
+            Debug.Log("Derrota.");
+        }
+    }
+
+    private IEnumerator WaitForTileSelection()
+    {
+        bool isTileSelected = false;
+        while (!isTileSelected)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    SendData(hit.collider.gameObject.name);
+                    isTileSelected = true;
+                }
+            }
+
+            yield return null; // Wait for the next frame
+        }
+    }
+
+    public static bool ValidateString(string inputString)
+    {
+        // Define el patrón de la expresión regular
+        string pattern = @"^[A-E][1-5]$";
+
+        // Utiliza Regex.IsMatch para verificar si el string coincide con el patrón
+        return Regex.IsMatch(inputString, pattern);
     }
 
     public void SendData(string data)
@@ -217,27 +253,33 @@ public class GameManager : MonoBehaviour
         shipScript.RotateShip();
     }
 
-    public string CheckTileGuesses(String guess) {
-        if (positions.Count != 0)
+    public string CheckTileGuesses(String guess)
+    {
+        if (shipsPositions.Count != 0)
         {
-            if (positions.Contains(guess))
+            if (shipsPositions.Contains(guess))
             {
-                positions.Remove(guess);
+                shipsPositions.Remove(guess);
                 GameObject tile = GameObject.Find(guess);
                 Vector3 vec = tile.transform.position;
                 vec.y += 15;
                 GameObject missile = Instantiate(enemyMissilePrefab, vec, enemyMissilePrefab.transform.rotation);
-                return("ATINASTE");
+                tile.GetComponent<TileScript>().SetTileColor(1, new Color32(68, 0, 0, 255));
+                tile.GetComponent<TileScript>().SwitchColors(1);
+
+                return ("ATINASTE");
             }
             else
             {
+                GameObject tile = GameObject.Find(guess);
+
+                tile.GetComponent<TileScript>().SetTileColor(1, new Color32(38, 57, 76, 255));
+                tile.GetComponent<TileScript>().SwitchColors(1);
                 return ("FALLASTE");
             }
         }
-        else
-        {
-            return ("DERROTA");
-        }
+
+        return ("DERROTA");
     }
 
 

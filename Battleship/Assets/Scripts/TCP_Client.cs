@@ -23,8 +23,7 @@ public class TCP_Client : MonoBehaviour
 
     private void Start()
     {
-        GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
-        positions = gameManager.shipsPositions;
+
 
     }
 
