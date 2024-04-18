@@ -28,6 +28,12 @@ int main() {
     server_addr.sin_addr.s_addr = inet_addr(SERVER_IP);
     server_addr.sin_port = htons(PORT);
 
+    char byte[1] = {1};
+    if (sendto(client_fd, byte, strlen(byte), 0, (struct sockaddr *)&server_addr, addr_len) < 0) {
+        perror("Error al enviar mensaje");
+        return -1;
+    }
+    
     // Message chat loop
     while (1) {
         printf("Ingrese un mensaje: ");
