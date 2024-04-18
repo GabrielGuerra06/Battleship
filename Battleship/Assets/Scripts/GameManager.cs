@@ -95,11 +95,11 @@ public class GameManager : MonoBehaviour
                 string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 Debug.Log("Datos recibidos del servidor: " + receivedData);
 
-                if (receivedData.Contains("Prueba"))
+                if (receivedData.Contains("Prueba posicion:"))
                 {
                     SendData("A3");
                 }
-                else if (receivedData.Contains("Espera"))
+                else if (receivedData.Contains("Espera tu turno."))
                 {
                     stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
                 }
