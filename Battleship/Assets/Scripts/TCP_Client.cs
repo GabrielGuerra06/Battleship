@@ -19,13 +19,27 @@ public class TCP_Client : MonoBehaviour
 
     public List<string> positions;
 
+    private bool selectAction;
+
     private void Start()
     {
-
         GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
         positions = gameManager.shipsPositions;
 
     }
+
+    public void onLoginClick()
+    {
+        selectAction = false;
+    }
+
+    public void onRegisterClick()
+    {
+        selectAction = true;
+        Debug.Log(selectAction + " 1");
+
+    }
+
 
     public void ConnectToServer()
     {
@@ -51,13 +65,11 @@ public class TCP_Client : MonoBehaviour
 
     public void GetNameInputString(string name) {
         nameInput = name;
-        Debug.Log(name);
     } 
 
     public void GetPasswordInputString(string password)
     {
         passwordInput = password;
-        Debug.Log(password);
     }
 
 
@@ -79,11 +91,29 @@ public class TCP_Client : MonoBehaviour
             {
                 String nombre = nameInput;
                 String contraseña = passwordInput;
-                byte[] registerMessage = ConstructMessage(new byte[] { 0b00001001 }, nombre, contraseña);
-                stream.Write(registerMessage, 0, registerMessage.Length);
+                Debug.Log(selectAction + " 2");
+                if (selectAction == true)
+                {
+                    Debug.Log("hola pija");
+                    byte[] registerMessage = ConstructMessage(new byte[] { 0b00001001 }, nombre, contraseña);
+                    stream.Write(registerMessage, 0, registerMessage.Length);
+                    Debug.Log("Registration details sent to server.");
 
-                Debug.Log("Registration details sent to server.");
 
+                }
+                else if (selectAction == false) 
+                {
+                    Debug.Log("hola pene");
+
+                    byte[] registerMessage = ConstructMessage(new byte[] { 0b00001000 }, nombre, contraseña);
+                    stream.Write(registerMessage, 0, registerMessage.Length);
+                    Debug.Log("Registration details sent to server.");
+
+                }
+                else
+                {
+                    Debug.Log("No funco");
+                }
 
                 // if (message == "login")
                 // {
@@ -112,21 +142,21 @@ public class TCP_Client : MonoBehaviour
             if (positions.Contains(guess))
             {
                 positions.Remove(guess);
-                return("ATINASTE UN BARCO EN LA POSICION ");
+                return("ATINASTE UN BARCO EN LA POSICION " + guess);
             }
             else
             {
-                return ("Pedazo de manco, no le atinaste");
+                return ("Disparo fallido");
             }
         }
         else
         {
             return ("Perdi");
         }
-
     }
-    
 
+
+   
     private byte[] ConstructMessage(byte[] action, string username, string authKey)
     {
         byte[] messageBytes = new byte[29]; // Total size: 1 (action) + 24 (username) + 4 (authKey)
