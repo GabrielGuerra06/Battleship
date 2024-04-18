@@ -8,30 +8,37 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System.Net.Sockets;
+using System.Text;
 using UnityEditor;
-using UnityEditor.iOS.Xcode;
 
 public class GameManager : MonoBehaviour
 {
+    public string serverIP = "127.0.0.1"; // IP del servidor al que te quieres conectar
+    public int serverPort = 8888; // Puerto del servidor al que te quieres conectar
 
-    [Header("Ships")]
-    public GameObject[] ships;
-    public EnemyScript enemyScript;
+    private TcpClient client;
+    private NetworkStream stream;
+    private byte[] buffer = new byte[1024];
+
+    public List<string> positions;
+
+
+    [Header("Ships")] public GameObject[] ships;
+    public EnemyScript enemyScript; //quitar esto
     private ShipScript shipScript;
     private List<int[]> enemyShips;
     private int shipIndex = 0;
     public List<TileScript> allTileScripts;
 
-    [Header("HUD")]
-    public Button nextBtn;
+    [Header("HUD")] public Button nextBtn;
     public Button rotateBtn;
     public Button replayBtn;
     public TMP_Text topText;
     public TMP_Text playerShipText;
     public TMP_Text enemyShipText;
 
-    [Header("Objects")]
-    public GameObject missilePrefab;
+    [Header("Objects")] public GameObject missilePrefab;
     public GameObject enemyMissilePrefab;
     public GameObject firePrefab;
     public GameObject woodDock;
@@ -60,6 +67,88 @@ public class GameManager : MonoBehaviour
         enemyShips = enemyScript.PlaceEnemyShips();
     }
 
+
+    private void ConnectToServer()
+    {
+        try
+        {
+            client = new TcpClient(serverIP, serverPort);
+            stream = client.GetStream();
+
+            Debug.Log("Conectado al servidor");
+
+            stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error al conectar al servidor: " + e.Message);
+        }
+    }
+
+    private void ReceiveData(IAsyncResult ar)
+    {
+        try
+        {
+            int bytesRead = stream.EndRead(ar);
+            if (bytesRead > 0)
+            {
+                string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                Debug.Log("Datos recibidos del servidor: " + receivedData);
+
+                if (receivedData.Contains("Prueba"))
+                {
+                    SendData("A3");
+                }
+                else if (receivedData.Contains("Espera"))
+                {
+                    stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
+                }
+                else if (receivedData == "A3")
+                {
+                    SendData(CheckTileGuesses(receivedData));
+
+                }
+                else if(receivedData == "ATINASTE"){
+                    
+                }
+
+                else if(receivedData == "FALLASTE"){
+                    
+                }
+
+                else if(receivedData == "DERROTA"){
+                    
+                }
+
+
+
+                stream.BeginRead(buffer, 0, buffer.Length, ReceiveData, null);
+            }
+            else
+            {
+                Debug.Log("El servidor ha cerrado la conexión");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error al recibir datos del servidor: " + e.Message);
+        }
+    }
+
+    public void SendData(string data)
+    {
+        try
+        {
+            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            stream.Write(byteData, 0, byteData.Length);
+            Debug.Log("Datos enviados al servidor: " + data);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error al enviar datos al servidor: " + e.Message);
+        }
+    }
+
     private void NextShipClicked()
     {
         if (!shipScript.OnGameBoard())
@@ -75,7 +164,6 @@ public class GameManager : MonoBehaviour
                 shipScript.FlashColor(Color.yellow);
                 String lastElement = player1Ships.Last();
                 shipsPositions.Add(lastElement);
-
             }
             else
             {
@@ -91,9 +179,10 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log(shipsPositions[i]);
                 }
+
+                ConnectToServer();
             }
         }
-
     }
 
     public void TileClicked(GameObject tile)
@@ -128,6 +217,30 @@ public class GameManager : MonoBehaviour
         shipScript.RotateShip();
     }
 
+    public string CheckTileGuesses(String guess) {
+        if (positions.Count != 0)
+        {
+            if (positions.Contains(guess))
+            {
+                positions.Remove(guess);
+                GameObject tile = GameObject.Find(guess);
+                Vector3 vec = tile.transform.position;
+                vec.y += 15;
+                GameObject missile = Instantiate(enemyMissilePrefab, vec, enemyMissilePrefab.transform.rotation);
+                return("ATINASTE");
+            }
+            else
+            {
+                return ("FALLASTE");
+            }
+        }
+        else
+        {
+            return ("DERROTA");
+        }
+    }
+
+
     public void CheckHit(GameObject tile)
     {
         int tileNum = Int32.Parse(Regex.Match(tile.name, @"\d+").Value);
@@ -148,6 +261,7 @@ public class GameManager : MonoBehaviour
                         hitCount++;
                     }
                 }
+
                 if (hitCount == tileNumArray.Length)
                 {
                     enemyShipCount--;
@@ -162,16 +276,18 @@ public class GameManager : MonoBehaviour
                     tile.GetComponent<TileScript>().SetTileColor(1, new Color32(255, 0, 0, 255));
                     tile.GetComponent<TileScript>().SwitchColors(1);
                 }
+
                 break;
             }
-
         }
+
         if (hitCount == 0)
         {
             tile.GetComponent<TileScript>().SetTileColor(1, new Color32(38, 57, 76, 255));
             tile.GetComponent<TileScript>().SwitchColors(1);
             topText.text = "Missed, there is no ship there.";
         }
+
         Invoke("EndPlayerTurn", 1.0f);
     }
 
@@ -187,6 +303,7 @@ public class GameManager : MonoBehaviour
             playerShipText.text = playerShipCount.ToString();
             enemyScript.SunkPlayer();
         }
+
         Invoke("EndEnemyTurn", 2.0f);
     }
 
@@ -234,7 +351,4 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-
-
 }

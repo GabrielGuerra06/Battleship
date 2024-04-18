@@ -6796,6 +6796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8c085d05297f74eaac55db959a6970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ipAddress: 127.0.0.1
+  port: 8888
   ships:
   - {fileID: 848561473}
   - {fileID: 2042119980}
@@ -6914,6 +6916,8 @@ MonoBehaviour:
   enemyMissilePrefab: {fileID: 1070225657215313480, guid: c0b648fdc18c93a42ac819a326517f07, type: 3}
   firePrefab: {fileID: 7629157345637087946, guid: 9cb9768122210d644af38d2cfb7e426e, type: 3}
   woodDock: {fileID: 2000621969}
+  player1Ships: []
+  shipsPositions: []
 --- !u!4 &1930280656
 Transform:
   m_ObjectHideFlags: 0

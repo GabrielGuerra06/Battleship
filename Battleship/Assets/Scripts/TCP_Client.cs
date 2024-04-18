@@ -109,19 +109,9 @@ public class TCP_Client : MonoBehaviour
                     Debug.Log("No funco");
                 }
 
-                // if (message == "login")
-                // {
-                //     // Construct login message
-                //     byte[] loginMessage = ConstructMessage(new byte[] { 0b00001000 }, "SomeUsername", "SomeAuthKey");
-                //     stream.Write(loginMessage, 0, loginMessage.Length);
-                // }
-                // else
-                // {
-                //     Debug.LogError("Invalid choice.");
-                // }
+
             }
 
-            // Continue listening for more messages
             stream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, ReceiveCallback, null);
         }
         catch (Exception e)

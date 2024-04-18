@@ -1,71 +1,111 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <sys/socket.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 #define PORT 8888
+#define MAX_CLIENTS 2
 #define BUFFER_SIZE 1024
 
 int main() {
-    int server_socket, client_socket;
+    int server_fd, client_sockets[MAX_CLIENTS];
     struct sockaddr_in server_addr, client_addr;
-    socklen_t client_addr_len = sizeof(client_addr);
+    socklen_t client_len;
     char buffer[BUFFER_SIZE];
+    int client_count = 0;
+    int opt = 1;
 
-    // Create socket
-    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-        perror("Error creating socket");
-        exit(EXIT_FAILURE);
+    // Crear el socket del servidor
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_fd == -1) {
+        printf("Error al crear el socket\n");
+        return 1;
     }
 
-    // Initialize server address struct
-    memset(&server_addr, 0, sizeof(server_addr));
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+
+    // Configurar la dirección del servidor
     server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(PORT);
 
-    // Bind socket
-    if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
-        perror("Error binding socket");
-        exit(EXIT_FAILURE);
+    // Vincular el socket a la dirección del servidor
+    if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
+        printf("Error al vincular el socket\n");
+        return 1;
     }
 
-    // Listen for incoming connections
-    if (listen(server_socket, 2) == -1) {
-        perror("Error listening");
-        exit(EXIT_FAILURE);
+    // Escuchar conexiones entrantes
+    if (listen(server_fd, MAX_CLIENTS) == -1) {
+        printf("Error al escuchar conexiones\n");
+        return 1;
     }
-    printf("Server listening on port %d...\n", PORT);
 
-    // Accept two clients
-    for (int i = 0; i < 2; ++i) {
-        if ((client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_addr_len)) == -1) {
-            perror("Error accepting connection");
-            exit(EXIT_FAILURE);
+    printf("Servidor iniciado. Esperando conexiones...\n");
+
+    while (client_count < MAX_CLIENTS) {
+        client_len = sizeof(client_addr);
+        client_sockets[client_count] = accept(server_fd, (struct sockaddr *)&client_addr, &client_len);
+        if (client_sockets[client_count] == -1) {
+            printf("Error al aceptar conexión\n");
+            return 1;
         }
 
-        printf("Client %d connected.\n", i + 1);
+        printf("Cliente %d conectado\n", client_count + 1);
+        client_count++;
+    }
 
-        // Receive and send messages
-        while (1) {
-            memset(buffer, 0, BUFFER_SIZE);
-            if (recv(client_socket, buffer, BUFFER_SIZE, 0) == -1) {
-                perror("Error receiving message");
-                exit(EXIT_FAILURE);
-            }
-            printf("Received from client %d: %s\n", i + 1, buffer);
+    printf("Dos clientes conectados. Enviando mensaje...\n");
 
-            printf("Enter message to send to client %d: ", (i == 0) ? 2 : 1);
-            fgets(buffer, BUFFER_SIZE, stdin);
-
-            if (send(client_socket, buffer, strlen(buffer), 0) == -1) {
-                perror("Error sending message");
-                exit(EXIT_FAILURE);
-            }
+    char position[BUFFER_SIZE];
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (i == 0) {
+            // Prompt the first player to select a position
+            //clean
+            strcpy(buffer, "Prueba posicion:");
+            send(client_sockets[i], buffer, strlen(buffer), 0);
+            memset(buffer, 0, sizeof(buffer));
+            ssize_t recv_len = recv(client_sockets[i], buffer, BUFFER_SIZE, 0);
+            buffer[recv_len] = '\0';
+            strcpy(position, buffer);
+            printf("Posicion recibida del jugador %d: %s\n", i + 1, position);
+        }
+        else {
+            strcpy(buffer, "Espera tu turno.");
+            send(client_sockets[i], buffer, strlen(buffer), 0);
+            printf("El jugador %d está esperando su turno.\n", i + 1);
         }
     }
 
-    close(server_socket);
+    int send_cl = send(client_sockets[1], position, strlen(position), 0);
+    if (send_cl == -1) {
+        perror("Send Error");
+        printf("LN 80 In: %d\n", send_cl);
+    }
+    printf("LN 80 Out: %d\n", send_cl);
+
+
+    memset(buffer, 0, sizeof(buffer));
+    ssize_t recv_len = recv(client_sockets[1], buffer, BUFFER_SIZE, 0);
+    printf("LN 90: %zd\n", recv_len);
+    buffer[recv_len] = '\0';
+    //Handle cases of the buffer answer
+    if (strcmp(buffer, "ATINASTE") == 0) {
+        strcpy(buffer, "ATINASTE");
+    }
+    else if (strcmp(buffer, "FALLASTE") == 0) {
+        printf("oops!\n");
+    }
+    else if (strcmp(buffer, "DERROTA") == 0) {
+        printf("Perdiste!\n");
+    }
+
+    // Cerrar los sockets de los clientes y el socket del servidor
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        close(client_sockets[i]);
+    }
+    close(server_fd);
+
     return 0;
 }
