@@ -8,6 +8,67 @@
 #define MAX_CLIENTS 2
 #define BUFFER_SIZE 1024
 
+void handleGameLoop(int* client_sockets, char* buffer, char* position) {
+    char playerResponse[BUFFER_SIZE];
+    int temp;
+
+    // Loop through each client socket
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (i == 0) {
+            // Prompt the first player to select a position
+            strcpy(buffer, "Prueba posicion:");
+            send(client_sockets[i], buffer, strlen(buffer), 0);
+            memset(buffer, 0, sizeof(buffer));
+            ssize_t recv_len = recv(client_sockets[i], buffer, BUFFER_SIZE, 0);
+            buffer[recv_len] = '\0';
+            strcpy(position, buffer);
+            printf("Posicion recibida del jugador %d: %s\n", i + 1, position);
+        }
+        else {
+            strcpy(buffer, "Espera tu turno.");
+            send(client_sockets[i], buffer, strlen(buffer), 0);
+            printf("El jugador %d está esperando su turno.\n", i + 1);
+            sleep(3);
+        }
+    }
+
+    int send_cl = send(client_sockets[1], position, strlen(position), 0);
+    if (send_cl == -1) {
+        perror("Send Error");
+        printf("LN 80 In: %d\n", send_cl);
+    }
+    printf("LN 80 Out: %d\n", send_cl);
+
+    memset(buffer, 0, sizeof(buffer));
+    ssize_t recv_len = recv(client_sockets[1], buffer, BUFFER_SIZE, 0);
+    printf("LN 90: %zd\n", recv_len);
+    buffer[recv_len] = '\0';
+
+    //Handle cases of the buffer answer
+    if (strcmp(buffer, "ATINASTE") == 0) {
+        send(client_sockets[0], buffer, strlen(buffer), 0);
+        // Swap client sockets and call the function again
+        temp = client_sockets[0];
+        client_sockets[0] = client_sockets[1];
+        client_sockets[1] = temp;
+        handleGameLoop(client_sockets, buffer, position);
+    }
+    else if (strcmp(buffer, "FALLASTE") == 0) {
+        printf("oops!\n");
+        send(client_sockets[0], buffer, strlen(buffer), 0);
+        // Swap client sockets and call the function again
+        temp = client_sockets[0];
+        client_sockets[0] = client_sockets[1];
+        client_sockets[1] = temp;
+        handleGameLoop(client_sockets, buffer, position);
+    }
+    else if (strcmp(buffer, "DERROTA") == 0) {
+        printf("Perdiste!\n");
+        send(client_sockets[0], buffer, strlen(buffer), 0);
+        // Game over, no need to call the function again
+    }
+}
+
 int main() {
     int server_fd, client_sockets[MAX_CLIENTS];
     struct sockaddr_in server_addr, client_addr;
@@ -59,47 +120,7 @@ int main() {
     printf("Dos clientes conectados. Enviando mensaje...\n");
 
     char position[BUFFER_SIZE];
-    for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (i == 0) {
-            // Prompt the first player to select a position
-            //clean
-            strcpy(buffer, "Prueba posicion:");
-            send(client_sockets[i], buffer, strlen(buffer), 0);
-            memset(buffer, 0, sizeof(buffer));
-            ssize_t recv_len = recv(client_sockets[i], buffer, BUFFER_SIZE, 0);
-            buffer[recv_len] = '\0';
-            strcpy(position, buffer);
-            printf("Posicion recibida del jugador %d: %s\n", i + 1, position);
-        }
-        else {
-            strcpy(buffer, "Espera tu turno.");
-            send(client_sockets[i], buffer, strlen(buffer), 0);
-            printf("El jugador %d está esperando su turno.\n", i + 1);
-        }
-    }
-
-    int send_cl = send(client_sockets[1], position, strlen(position), 0);
-    if (send_cl == -1) {
-        perror("Send Error");
-        printf("LN 80 In: %d\n", send_cl);
-    }
-    printf("LN 80 Out: %d\n", send_cl);
-
-
-    memset(buffer, 0, sizeof(buffer));
-    ssize_t recv_len = recv(client_sockets[1], buffer, BUFFER_SIZE, 0);
-    printf("LN 90: %zd\n", recv_len);
-    buffer[recv_len] = '\0';
-    //Handle cases of the buffer answer
-    if (strcmp(buffer, "ATINASTE") == 0) {
-        strcpy(buffer, "ATINASTE");
-    }
-    else if (strcmp(buffer, "FALLASTE") == 0) {
-        printf("oops!\n");
-    }
-    else if (strcmp(buffer, "DERROTA") == 0) {
-        printf("Perdiste!\n");
-    }
+    handleGameLoop(client_sockets, buffer, position);
 
     // Cerrar los sockets de los clientes y el socket del servidor
     for (int i = 0; i < MAX_CLIENTS; i++) {

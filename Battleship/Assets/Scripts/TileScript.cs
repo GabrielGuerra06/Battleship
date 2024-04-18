@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TileScript : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TileScript : MonoBehaviour
 
     private bool missileHit = false;
     Color32[] hitColor = new Color32[2];
+
+    public UnityEvent<string> eventoNombreObjeto;
 
     void Start()
     {
@@ -28,6 +31,7 @@ public class TileScript : MonoBehaviour
                 if (missileHit == false)
                 {
                     gameManager.TileClicked(hit.collider.gameObject);
+                    eventoNombreObjeto.Invoke(hit.collider.gameObject.name);
                 }
             }
         }
@@ -44,7 +48,6 @@ public class TileScript : MonoBehaviour
             hitColor[0] = new Color32(38, 57, 76, 255);
             GetComponent<Renderer>().material.color = hitColor[0];
         }
-
     }
 
     public void SetTileColor(int index, Color32 color)
